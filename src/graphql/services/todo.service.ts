@@ -15,6 +15,7 @@ interface GetTodosArgs {
         title: string;
         description: string;
         completed: boolean;
+        userId: string;
     }
 
     const prisma = new PrismaClient();
@@ -60,6 +61,19 @@ interface GetTodosArgs {
         if(!todo) {
             throw new Error("Todo not found");
         }
+
+        return todo;
+    }
+
+    export const createTodo = async ({ title, description, completed }: TodoInput, userId: string) => {
+        const todo = await prisma.todo.create({
+            data: {
+                title,
+                description,
+                completed,
+                userId,
+            },
+        });
 
         return todo;
     }
