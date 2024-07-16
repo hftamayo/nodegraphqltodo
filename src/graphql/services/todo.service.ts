@@ -1,80 +1,82 @@
 import { PrismaClient } from "@prisma/client";
-import {extractSelection} from "../utils/extractSelections"
+import { extractSelection } from "../utils/extractSelections";
 import { GraphQLResolveInfo } from "graphql";
 
 interface GetTodosArgs {
-    info: GraphQLResolveInfo;
-    userId: string;
-    }
+  info: GraphQLResolveInfo;
+  userId: string;
+}
 
-    interface GetTodoArgs extends GetTodosArgs {
-        id: string;
-    }
+interface GetTodoArgs extends GetTodosArgs {
+  id: string;
+}
 
-    interface TodoInput {
-        title: string;
-        description: string;
-        completed: boolean;
-        userId: string;
-    }
+interface TodoInput {
+  title: string;
+  description: string;
+  completed: boolean;
+  userId: string;
+}
 
-    const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-    export const getTodos = async ({ info, userId }: GetTodosArgs) => {
-        const extractedSelections = extractSelection(info);
+export const getTodos = async ({ info, userId }: GetTodosArgs) => {
+  const extractedSelections = extractSelection(info);
 
-        const select = extractedSelections.reduce((acc, field) => {
-            acc[field] = true;
-            return acc;
-        }, {});
+  const select = extractedSelections.reduce((acc, field) => {
+    acc[field] = true;
+    return acc;
+  }, {});
 
-        let filteredTodos = await prisma.todo.findMany({
-            where: {
-                userId: userId,
-            },
-            select: select,
-        });
+  let filteredTodos = await prisma.todo.findMany({
+    where: {
+      userId: userId,
+    },
+    select: select,
+  });
 
-        if(filteredTodos.length === 0) {
-            throw new Error("No todos found");
-        }
+  if (filteredTodos.length === 0) {
+    throw new Error("No todos found");
+  }
 
-        return filteredTodos;
-    }
+  return filteredTodos;
+};
 
-    export const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
-        const extractedSelections = extractSelection(info);
+export const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
+  const extractedSelections = extractSelection(info);
 
-        const select = extractedSelections.reduce((acc, field) => {
-            acc[field] = true;
-            return acc;
-        }, {});
+  const select = extractedSelections.reduce((acc, field) => {
+    acc[field] = true;
+    return acc;
+  }, {});
 
-        let todo = await prisma.todo.findFirst({
-            where: {
-                userId: userId,
-                id: id,
-            },
-            select: select,
-        });
+  let todo = await prisma.todo.findFirst({
+    where: {
+      userId: userId,
+      id: id,
+    },
+    select: select,
+  });
 
-        if(!todo) {
-            throw new Error("Todo not found");
-        }
+  if (!todo) {
+    throw new Error("Todo not found");
+  }
 
-        return todo;
-    }
+  return todo;
+};
 
-    export const createTodo = async ({ title, description, completed }: TodoInput, userId: string) => {
-        let todo = await prisma.todo.create({
-            data: {
-                title,
-                description,
-                completed,
-                userId,
-            },
-        });
+export const createTodo = async (
+  { title, description, completed }: TodoInput,
+  userId: string
+) => {
+  let todo = await prisma.todo.create({
+    data: {
+      title,
+      description,
+      completed,
+      userId,
+    },
+  });
 
-        return todo;
-
-    }
+  return todo;
+};
