@@ -66,7 +66,7 @@ interface GetTodosArgs {
     }
 
     export const createTodo = async ({ title, description, completed }: TodoInput, userId: string) => {
-        const todo = await prisma.todo.create({
+        let todo = await prisma.todo.create({
             data: {
                 title,
                 description,
@@ -76,4 +76,5 @@ interface GetTodosArgs {
         });
 
         return todo;
+
     }
