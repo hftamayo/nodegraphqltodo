@@ -80,3 +80,32 @@ export const createTodo = async (
 
   return todo;
 };
+
+export const updateTodo = async (
+  { title, description, completed }: TodoInput,
+  userId: string,
+  id: string
+) => {
+  let todo = await prisma.todo.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+      description,
+      completed,
+    },
+  });
+
+  return todo;
+};
+
+export const deleteTodo = async (userId: string, id: string) => {
+  let todo = await prisma.todo.delete({
+    where: {
+      id,
+    },
+  });
+
+  return todo;
+};
