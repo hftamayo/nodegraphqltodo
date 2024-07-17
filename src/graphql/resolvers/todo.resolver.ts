@@ -35,12 +35,12 @@ export const todoResolver = {
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await createTodo({
-        title: args.title,
-        description: args.description,
-        completed: args.completed,
-        userId: args.userId,
-      });
+      return await createTodo(
+        args.title,
+        args.description,
+        args.completed,
+        args.userId,
+      );
     },
     async updateTodo(
       _: any,
@@ -48,13 +48,13 @@ export const todoResolver = {
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await updateTodo({
-        title: args.title,
-        description: args.description,
-        completed: args.completed,
-        userId: args.userId,
-        id: args.id,
-      });
+      return await updateTodo(
+        args.title,
+        args.description,
+        args.completed,
+        args.userId,
+        args.id,
+      );
     },
     async deleteTodo(
       _: any,
@@ -62,10 +62,7 @@ export const todoResolver = {
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await deleteTodo({
-        userId: args.userId,
-        id: args.id,
-      });
+      return await deleteTodo(args.userId, args.id);
     },
   },
 };
