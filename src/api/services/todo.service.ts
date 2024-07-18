@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { extractSelection } from "../utils/extractSelections";
+import { extractSelection } from "../graphql/utils/extractSelections";
 import { GraphQLResolveInfo } from "graphql";
 
 interface GetTodosArgs {

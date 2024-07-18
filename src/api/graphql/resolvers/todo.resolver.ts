@@ -5,7 +5,7 @@ import {
   deleteTodo,
   getTodo,
   getTodos,
-} from "../services/todo.service";
+} from "../../services/todo.service";
 import { Query } from "type-graphql";
 import { info } from "console";
 
