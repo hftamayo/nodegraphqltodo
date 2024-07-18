@@ -66,8 +66,7 @@ export const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
 };
 
 export const createTodo = async (
-  { title, description, completed }: TodoInput,
-  userId: string
+  { title, description, completed, userId }: TodoInput,
 ) => {
   let todo = await prisma.todo.create({
     data: {
