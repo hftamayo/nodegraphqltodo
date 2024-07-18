@@ -15,7 +15,13 @@ interface TodoInput {
   title: string;
   description: string;
   completed: boolean;
-  userId?: string;
+  userId: string;
+}
+
+interface TodoUpdateInput {
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
 const prisma = new PrismaClient();
@@ -81,7 +87,7 @@ export const createTodo = async (
 };
 
 export const updateTodo = async (
-  { title, description, completed }: TodoInput,
+  { title, description, completed }: TodoUpdateInput,
   id: string
 ) => {
   let todo = await prisma.todo.update({
