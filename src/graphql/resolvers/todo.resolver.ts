@@ -44,12 +44,8 @@ export const todoResolver = {
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await updateTodo(
-        args.title,
-        args.description,
-        args.completed,
-        args.userId,
-        args.id
+      const { title, description, completed } = args;
+      return await updateTodo({ title, description, completed }, args.id
       );
     },
     async deleteTodo(
