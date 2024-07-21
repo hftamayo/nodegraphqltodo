@@ -1,31 +1,25 @@
 import { GraphQLResolveInfo } from "graphql";
-import {
-  createTodo,
-  updateTodo,
-  deleteTodo,
-  getTodo,
-  getTodos,
-} from "../../services/todo.service";
+import todoService from "../../services/todo.service";
 import { Query } from "type-graphql";
 import { info } from "console";
 
 export const todoResolver = {
   Query: {
-    async todos(
+    async listActiveTodos(
       _: any,
       args: Record<string, any>,
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await getTodos({ info, userId: args.userId });
+      return await todoService.getTodos({ info, userId: args.userId });
     },
-    async todo(
+    async listTodoByID(
       _: any,
       args: Record<string, any>,
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await getTodo({ info, userId: args.userId, id: args.id });
+      return await todoService.getTodo({ info, userId: args.userId, id: args.id });
     },
   },
   Mutation: {
@@ -36,25 +30,25 @@ export const todoResolver = {
       info: GraphQLResolveInfo
     ) {
       const { title, description, completed, userId } = args;
-      return await createTodo({ title, description, completed, userId });
+      return await todoService.createTodo({ title, description, completed, userId });
     },
-    async updateTodo(
+    async updateTodoByID(
       _: any,
       args: Record<string, any>,
       context: any,
       info: GraphQLResolveInfo
     ) {
       const { title, description, completed } = args;
-      return await updateTodo({ title, description, completed }, args.id
+      return await todoService.updateTodo({ title, description, completed }, args.id
       );
     },
-    async deleteTodo(
+    async deleteTodoByID(
       _: any,
       args: Record<string, any>,
       context: any,
       info: GraphQLResolveInfo
     ) {
-      return await deleteTodo(args.userId, args.id);
+      return await todoService.deleteTodo(args.userId, args.id);
     },
   },
 };
