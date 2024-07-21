@@ -26,7 +26,7 @@ interface TodoUpdateInput {
 
 const prisma = new PrismaClient();
 
-export const getTodos = async ({ info, userId }: GetTodosArgs) => {
+const getTodos = async ({ info, userId }: GetTodosArgs) => {
   const extractedSelections = extractSelection(info);
 
   const select = extractedSelections.reduce((acc, field) => {
@@ -48,7 +48,7 @@ export const getTodos = async ({ info, userId }: GetTodosArgs) => {
   return filteredTodos;
 };
 
-export const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
+const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
   const extractedSelections = extractSelection(info);
 
   const select = extractedSelections.reduce((acc, field) => {
@@ -71,9 +71,12 @@ export const getTodo = async ({ info, userId, id }: GetTodoArgs) => {
   return todo;
 };
 
-export const createTodo = async (
-  { title, description, completed, userId }: TodoInput,
-) => {
+const createTodo = async ({
+  title,
+  description,
+  completed,
+  userId,
+}: TodoInput) => {
   let todo = await prisma.todo.create({
     data: {
       title,
@@ -86,7 +89,7 @@ export const createTodo = async (
   return todo;
 };
 
-export const updateTodo = async (
+const updateTodo = async (
   { title, description, completed }: TodoUpdateInput,
   id: string
 ) => {
@@ -104,7 +107,7 @@ export const updateTodo = async (
   return todo;
 };
 
-export const deleteTodo = async (userId: string, id: string) => {
+const deleteTodo = async (userId: string, id: string) => {
   let todo = await prisma.todo.delete({
     where: {
       id,
@@ -112,4 +115,12 @@ export const deleteTodo = async (userId: string, id: string) => {
   });
 
   return todo;
+};
+
+export default {
+  getTodos,
+  getTodo,
+  createTodo,
+  updateTodo,
+  deleteTodo,
 };
