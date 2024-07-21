@@ -1,24 +1,24 @@
 import express, { Request, Response } from "express";
-import {createTodoRules, updateTodoRules} from "../middleware/validator";
+import validator from "../middleware/validator";
 import validateResult from "../middleware/validationResults";
 import todoService from "../services/todo.service";
 
-router.get("/list", authorize, getTodosHandler);
-router.get("/task/:id", authorize, getTodoHandler);
+const router = express.Router();
+
+router.get("/list", getTodosHandler);
+router.get("/task/:id", getTodoHandler);
 router.post(
   "/create",
-  authorize,
   validator.createTodoRules,
   validateResult,
   newTodoHandler
 );
 router.patch(
   "/update/:id",
-  authorize,
   validator.updateTodoRules,
   validateResult,
   updateTodoHandler
 );
-router.delete("/delete/:id", authorize, deleteTodoHandler);
+router.delete("/delete/:id", deleteTodoHandler);
 
 export default router;
