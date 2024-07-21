@@ -52,3 +52,5 @@ export const todoResolver = {
     },
   },
 };
+
+export default todoResolver;
