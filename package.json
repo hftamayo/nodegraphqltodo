@@ -30,6 +30,7 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "cookie-parser": "^1.4.6",
     "prisma": "^5.16.2"
   }
 }
