@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Application} from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
@@ -9,7 +9,7 @@ import { port, mode } from "./api/config/envvars";
 import {todoResolver} from './api/graphql/resolvers/todo.resolver';
 
 const typeDefs = gql`${fs.readFileSync(path.join(__dirname, 'api/graphql/typeDefs/todo.graphql'), 'utf8')}`;
-const app = express();
+const app: Application = express();
 
 async function startBackEnd(){
     try{
