@@ -1,26 +1,17 @@
-import { ValidationChain, check } from "express-validator";
+import * as yup from 'yup';
 
-const createTodoRules: ValidationChain[] = [
-    check("title", "Title is Required").notEmpty().trim().escape(),
-    check("description", "Description is Required").notEmpty().trim().escape(),
-  ];
-  
-const updateTodoRules: ValidationChain[] = [
-    check("title", "Title is Required").optional().notEmpty().trim().escape(),
-    check("description", "Description is Required")
-      .optional()
-      .notEmpty()
-      .trim()
-      .escape(),
-    check("completed", "Completed is Required")
-      .optional()
-      .notEmpty()
-      .trim()
-      .escape()
-      .isBoolean(),
-  ];
-  
-  export default {
-    createTodoRules,
-    updateTodoRules,
-  };
+const createTodoSchema = yup.object({
+  title: yup.string().trim().required('Title is Required'),
+  description: yup.string().trim().required('Description is Required'),
+});
+
+const updateTodoSchema = yup.object({
+  title: yup.string().trim().optional(),
+  description: yup.string().trim().optional(),
+  completed: yup.bool().optional(),
+});
+
+export default {
+  createTodoSchema,
+  updateTodoSchema,
+};
