@@ -11,7 +11,6 @@ const masterKey = process.env.JWT_SECRET;
 const refreshKey = process.env.JWT_FRESH;
 const mode = process.env.EXEC_MODE;
 
-const whitelist_frontend = (process.env.FRONTEND_ORIGINS ?? '').split(",");
 const cors_secure = mode === 'production';
 const cors_samesite = mode === 'production' ? 'none' : 'lax';
 
@@ -29,7 +28,6 @@ export {
   refreshKey,
   mode,
   backend,
-  whitelist_frontend,
   cors_secure,
   cors_samesite,
   dataseeddev,
